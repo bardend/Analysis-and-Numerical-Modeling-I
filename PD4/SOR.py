@@ -23,33 +23,29 @@ def get_G(A,w):
      G=np.zeros((n, n))
      G= np.dot(np.linalg.inv(get_D(A)-w*get_E(A)),((1-w)*get_D(A) + w*get_F(A)))
      return G
-
 def SOR(A,b,w,tol):
      n=len(A)
      aux=np.zeros((n, 1))
-     x=np.transpose(np.array([0,1,0],float))
+     x=np.transpose(np.array([1.,1.,1.],float))
      i=0
-     while np.linalg.norm(x-aux, np.inf)>tol:
-        # print('La solucion en la iteracion ',i,' es:',x)
+     while np.linalg.norm(x-aux, np.inf)/np.linalg.norm(x, np.inf)>tol :
+         print('La solucion en la iteracion ',i,' es:',x)
          aux=x
-         x=np.dot(get_G(A,w),x)+w*np.dot(np.linalg.inv(get_D(A)-w*get_E(A)),b)     
+         x=np.dot(get_G(A,w),x)+w*np.dot(np.linalg.inv(get_D(A)-w*get_E(A)),b)
          i+=1
-         if i==1000:
+         if i==100:
             return 'La solucion NO converge'
-     if i!=1000:
-        print(w)
+     print("La respuesta final es: ")
+     return x
+
         
 
 
 #probelma 1
-A = np.array([[15, 12, 25],[10, 7, 20],[20, 15, 30]],float)
-b= np.transpose(np.array([2400,1320,3000]))
+A = np.array([[1,2,4], [4,4,1],[2,3,4]])
 
-#A = np.array([[4, 3, 0],[3, 4, -1],[0, -1, 4]],float)
+b= np.transpose(np.array([35,34,42]))
 
-#b= np.transpose(np.array([24,30,-24]))
-j = 0.1
-while j<2:
-    j+=0.02
-    SOR(A,b,j,1e-4)
+
+SOR(A,b,1.2,1e-4)
     
