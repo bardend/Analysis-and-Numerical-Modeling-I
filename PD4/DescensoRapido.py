@@ -29,7 +29,10 @@ def Max_des(A,b,x,tol):
     return xk
     
 #probelma 1
-A = np.array([[4,3,0], [3,4,-1],[0,-1,4]])
-b= np.transpose(np.array([24,30,-24]))
+A = np.array([[3,3,4],
+            [3,6,7],
+			[4,7,11]],float)
+
+b= np.transpose(np.array([6,9,11]))
 x0=np.transpose(np.array([1.,1.,1.],float))
 print(Max_des(A,b,x0,1e-3))
