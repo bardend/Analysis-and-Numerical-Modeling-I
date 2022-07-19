@@ -46,7 +46,7 @@ b=np.array([[-1],[3],[1],[1],[2]])
 R,Q,b = householder(A,b)
 print("\n----------------------------")
 print("\n La solución x es:\n")
-print(b)
+print(b)    
 print("\n----------------------------")
 
 """
