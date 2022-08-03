@@ -7,22 +7,26 @@ def householder_iterations(A, b, iterations):
     R = 1*A
 
     for j in range(iterations):
+        print("**********************************************")
         if np.allclose(R[j:, j], 0.0):
             pass
         else:
             phi = np.sqrt(sum(R[j:nrowA, j]**2))*np.sign(R[j,j])
-
+            print("La norma : \n",phi)
             w = np.zeros((nrowA, 1))
             w[j:nrowA, 0] = R[j:nrowA, j]
             w[j,0] += phi
-
-            beta = 1/sum(w[j:nrowA]**2)
-            Hj = np.identity(nrowA) - 2*beta*np.dot(w, w.T)
-        
+            print("vector v1\n",w)
+            beta = sum(w[j:nrowA]**2)
+            print("(V1.T*V1)\n",beta)
+            Hj = np.identity(nrowA) - 2*np.dot(w, w.T)/beta
+            print("Hi\n",Hj)
             R = np.dot(Hj, R)
             Qt = np.dot(Hj, Qt)
             b = np.dot(Hj, b)
-
+    print("Dont forget : Q = Hn-1*Hn-2*..H2*H1")
+    print("Dont forget : R = QA")
+        
     Q = Qt.T
 
     return R, Q, b 
@@ -36,14 +40,16 @@ def householder(A, b):
 
     return R, Q, b
 
-A =np.array([[2,-1,-1,0,0],
-[-1,3,0,-2,0],
-[-1,0,4,2,1],
-[0,-2,2,8,3],
-[0,0,1,3,9]])
-b=np.array([[-1],[3],[1],[1],[2]])
+A =np.array([[1,1],
+            [1,-1],
+            [1,-2]])
+b=np.array([[13],[9],[0]])
 
 R,Q,b = householder(A,b)
+print("Q")
+print(Q)
+print("R")
+print(R)
 print("\n----------------------------")
 print("\n La solución x es:\n")
 print(b)    
